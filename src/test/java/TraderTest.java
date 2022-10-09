@@ -1,5 +1,5 @@
 /*
- * This file contains JUnit test cases for Trader.java
+ * This file contains JUnit test cases for DrivableTrader.java
  * You should NOT modify this file!
  */
 

@@ -1,10 +1,10 @@
-/* Below is the Trader class, which functions similarly to the one from
+/* Below is the DrivableTrader class, which functions similarly to the one from
  * Lab 3, but with a handful of differences
  *
- * This implementation of Trader uses the generic type T instead of
- * Tradable: our Trader can have objects of any type, not just Tradable
- * ones! To have our original Trader class from Lab 3, we can
- * create a Trader<Tradable> object, as that will enforce that every
+ * This implementation of DrivableTrader uses the generic type T instead of
+ * Tradable: our DrivableTrader can have objects of any type, not just Tradable
+ * ones! To have our original DrivableTrader class from Lab 3, we can
+ * create a DrivableTrader<Tradable> object, as that will enforce that every
  * object is Tradable.
  *
  * Go through the TODOs below and complete them.
@@ -12,6 +12,7 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class Trader<T> {
@@ -21,12 +22,12 @@ public class Trader<T> {
 
 
     /**
-     * Construct a Trader, giving them the given inventory,
+     * Construct a DrivableTrader, giving them the given inventory,
      * wishlist, and money.
      *
-     * @param inventory Objects in this Trader's inventory
-     * @param wishlist  Objects in this Trader's wishlist
-     * @param money     The Trader's money
+     * @param inventory Objects in this DrivableTrader's inventory
+     * @param wishlist  Objects in this DrivableTrader's wishlist
+     * @param money     The DrivableTrader's money
      */
     public Trader(List<T> inventory, List<T> wishlist,
                   int money) {
@@ -36,17 +37,25 @@ public class Trader<T> {
     }
 
     /* TODO: Add a new constructor that takes a single argument
-     *       representing the Trader's money. Give the Trader
+     *       representing the DrivableTrader's money. Give the DrivableTrader
      *       empty ArrayLists for their inventory and wishlist.
      */
+    public Trader(int money) {
+        this.inventory = new ArrayList<T>();
+        this.wishlist = new ArrayList<T>();
+        this.money = money;
+    }
 
 
 
 
 
     /* TODO: Implement the method addToWishlist that takes an
-     *       object of type T and adds it to this Trader's wishlist.
+     *       object of type T and adds it to this DrivableTrader's wishlist.
      */
+    public void addToWishlist(T obj) {
+        this.wishlist.add(obj);
+    }
 
 
 
@@ -59,13 +68,21 @@ public class Trader<T> {
      *
      *       We will call this in exchangeMoney().
      */
+    public int getSellingPrice(T obj) {
+        if (obj instanceof Tradable) {
+            return ((Tradable) obj).getPrice();
+        }
+        else {
+            return Tradable.MISSING_PRICE;
+        }
+    }
 
 
 
 
 
     /**
-     * Exchange money from other to this Trader according to the price of item,
+     * Exchange money from other to this DrivableTrader according to the price of item,
      * if other has enough money. Otherwise, returns False.
      *
      * @return True if the exchange was completed.
@@ -85,10 +102,10 @@ public class Trader<T> {
     }
 
     /**
-     * Attempt to sell all items that are in both this Trader's inventory
+     * Attempt to sell all items that are in both this DrivableTrader's inventory
      * and in other's wishlist.
      *
-     * @return True iff at least one item was sold from this Trader to other
+     * @return True iff at least one item was sold from this DrivableTrader to other
      */
     public boolean sellTo(Trader<T> other) {
         boolean sold_at_least_one = false;
